@@ -12,7 +12,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
       ...document,
       _id: new Types.ObjectId(),
     });
-    return (await createdDocument.save()).toJSON() as unknown as TDocument; // toJSON will return a plain object with no additional property from Mongoose
+    return (await createdDocument.save()).toJSON() as unknown as TDocument;
   }
 
   async findOne(filterQuery: FilterQuery<TDocument>): Promise<TDocument> {
