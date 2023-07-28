@@ -8,15 +8,11 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   constructor(protected readonly model: Model<TDocument>) {}
 
   async create(document: Omit<TDocument, '_id'>): Promise<TDocument> {
-    const documentToBeCreated = new this.model({
+    const createdDocument = new this.model({
       ...document,
       _id: new Types.ObjectId(),
     });
-    const createdDocument = (
-      await documentToBeCreated.save()
-    ).toJSON() as unknown as TDocument; // toJSON will return a plain object with no additional property from Mongoose
-    this.logger.log('Document created with', createdDocument);
-    return createdDocument;
+    return (await createdDocument.save()).toJSON() as unknown as TDocument;
   }
 
   async findOne(filterQuery: FilterQuery<TDocument>): Promise<TDocument> {
