@@ -4,7 +4,7 @@ import { ReservationsController } from './reservations.controller';
 import { DatabaseModule, LoggerModule } from '@app/common';
 import { ReservationsRepository } from './reservations.repository';
 import {
-  reservationCollectionName,
+  reservationsCollectionName,
   ReservationSchema,
 } from './models/reservation.schema';
 
@@ -12,7 +12,7 @@ import {
   imports: [
     DatabaseModule,
     DatabaseModule.forFeature([
-      { name: reservationCollectionName, schema: ReservationSchema },
+      { name: reservationsCollectionName, schema: ReservationSchema },
     ]),
     LoggerModule,
   ],
