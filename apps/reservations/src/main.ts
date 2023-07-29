@@ -1,12 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { ReservationsModule } from './reservations.module';
-import { ValidationPipe } from '@nestjs/common';
-import { Logger } from 'nestjs-pino';
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger as PinoLogger } from 'nestjs-pino';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(ReservationsModule);
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-  app.useLogger(app.get(Logger));
-  await app.listen(3000);
+  app.useLogger(app.get(PinoLogger)); // as reservations app logger
+  const configService = app.get(ConfigService);
+  const port = configService.get('PORT');
+  await app.listen(port);
+  Logger.log(`Reservations REST server is running at port ${port}`);
 }
 bootstrap();
