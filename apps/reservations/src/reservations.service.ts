@@ -1,25 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { ReservationsRepository } from './reservations.repository';
 import { FilterQuery } from 'mongoose';
 import { ReservationDocument } from './models/reservation.schema';
+import { PAYMENTS_SERVICE } from '@app/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { map } from 'rxjs';
 
 @Injectable()
 export class ReservationsService {
   constructor(
     private readonly reservationsRepository: ReservationsRepository,
+    @Inject(PAYMENTS_SERVICE) private readonly paymentsService: ClientProxy,
   ) {}
 
   async create(createReservationDto: CreateReservationDto, userId: string) {
-    return this.reservationsRepository.create({
-      ...createReservationDto,
-      userId,
-    });
+    try {
+      // nestjs will subscribe to the observable by default
+      return this.paymentsService
+        .send('create_charge', createReservationDto.charge)
+        .pipe(
+          // executes after the response gets sent back successfully
+          map(async (res) => {
+            // map will transform the response and return the document to the router/controller
+            return this.reservationsRepository.create({
+              ...createReservationDto,
+              invoiceId: res.id,
+              userId,
+            });
+          }),
+        );
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
   async findAll(filterQuery: FilterQuery<ReservationDocument>) {
-    console.log(filterQuery);
     return this.reservationsRepository.find(filterQuery);
   }
 
