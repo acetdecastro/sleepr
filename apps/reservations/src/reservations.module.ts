@@ -19,7 +19,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         NODE_ENV: Joi.string()
           .valid('development', 'production', 'test')
           .default('development'),
-        PORT: Joi.number().default(3000),
+        HTTP_PORT: Joi.number().default(3000),
         MONGODB_URI: Joi.string().required(),
         AUTH_HOST: Joi.string().required(),
         AUTH_PORT: Joi.number().required(),
