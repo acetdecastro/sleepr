@@ -11,8 +11,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useLogger(app.get(PinoLogger)); // as reservations app logger
   const configService = app.get(ConfigService);
-  const port = configService.get('PORT');
-  await app.listen(port);
-  Logger.log(`Reservations REST server is running at port ${port}`);
+  const HTTP_PORT = configService.get('HTTP_PORT');
+  await app.listen(HTTP_PORT);
+  Logger.log(`Reservations REST server is running at port ${HTTP_PORT}`);
 }
 bootstrap();
