@@ -8,7 +8,7 @@ import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { ReservationsRepository } from './reservations.repository';
 import { FilterQuery } from 'mongoose';
 import { ReservationDocument } from './models/reservation.schema';
-import { PAYMENTS_SERVICE, UserDto } from '@app/common';
+import { EventType, PAYMENTS_SERVICE, UserDto } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { map } from 'rxjs';
 
@@ -26,7 +26,11 @@ export class ReservationsService {
     try {
       // nestjs will subscribe to the observable by default
       return this.paymentsService
-        .send('create_charge', { ...createReservationDto.charge, email })
+        .send('create_charge', {
+          ...createReservationDto.charge,
+          email,
+          event: EventType.RESERVATION,
+        })
         .pipe(
           // executes after the response gets sent back successfully
           map(async (res) => {

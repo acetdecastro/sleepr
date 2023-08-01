@@ -3,7 +3,12 @@ import { NotificationsController } from './notifications.controller';
 import { NotificationsService } from './notifications.service';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
-import { LoggerModule } from '@app/common';
+import { DatabaseModule, LoggerModule } from '@app/common';
+import {
+  NotificationSchema,
+  notificationsCollectionName,
+} from './models/notification.schema';
+import { NotificationsRepository } from './notification.repository';
 
 @Module({
   imports: [
@@ -21,9 +26,13 @@ import { LoggerModule } from '@app/common';
         GOOGLE_OAUTH_REFRESH_TOKEN: Joi.string().required(),
       }),
     }),
+    DatabaseModule,
+    DatabaseModule.forFeature([
+      { name: notificationsCollectionName, schema: NotificationSchema },
+    ]),
     LoggerModule,
   ],
   controllers: [NotificationsController],
-  providers: [NotificationsService],
+  providers: [NotificationsService, NotificationsRepository],
 })
 export class NotificationsModule {}
