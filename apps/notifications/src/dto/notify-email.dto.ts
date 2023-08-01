@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { EventType } from '@app/common';
+import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 
 export class NotifyEmailDto {
   @IsNotEmpty()
@@ -7,4 +8,7 @@ export class NotifyEmailDto {
 
   @IsString()
   text: string;
+
+  @IsEnum(EventType)
+  event: EventType;
 }
