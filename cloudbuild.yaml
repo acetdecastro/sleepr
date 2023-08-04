@@ -1,0 +1,72 @@
+steps:
+  # Reservations
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        't',
+        'asia-southeast1-docker.pkg.dev/fullstack-394610/reservations/production',
+        '-f',
+        'apps/reservations/Dockerfile',
+        '.',
+      ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'asia-southeast1-docker.pkg.dev/fullstack-394610/reservations/production',
+      ]
+
+  # Auth
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        't',
+        'asia-southeast1-docker.pkg.dev/fullstack-394610/auth/production',
+        '-f',
+        'apps/auth/Dockerfile',
+        '.',
+      ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'asia-southeast1-docker.pkg.dev/fullstack-394610/auth/production',
+      ]
+
+  # Payments
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        't',
+        'asia-southeast1-docker.pkg.dev/fullstack-394610/payments/production',
+        '-f',
+        'apps/payments/Dockerfile',
+        '.',
+      ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'asia-southeast1-docker.pkg.dev/fullstack-394610/payments/production',
+      ]
+
+  # Notifications
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        't',
+        'asia-southeast1-docker.pkg.dev/fullstack-394610/notifications/production',
+        '-f',
+        'apps/notifications/Dockerfile',
+        '.',
+      ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'asia-southeast1-docker.pkg.dev/fullstack-394610/notifications/production',
+      ]
