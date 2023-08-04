@@ -4,7 +4,7 @@ steps:
     args:
       [
         'build',
-        't',
+        '-t',
         'asia-southeast1-docker.pkg.dev/fullstack-394610/reservations/production',
         '-f',
         'apps/reservations/Dockerfile',
@@ -22,7 +22,7 @@ steps:
     args:
       [
         'build',
-        't',
+        '-t',
         'asia-southeast1-docker.pkg.dev/fullstack-394610/auth/production',
         '-f',
         'apps/auth/Dockerfile',
@@ -40,7 +40,7 @@ steps:
     args:
       [
         'build',
-        't',
+        '-t',
         'asia-southeast1-docker.pkg.dev/fullstack-394610/payments/production',
         '-f',
         'apps/payments/Dockerfile',
@@ -58,7 +58,7 @@ steps:
     args:
       [
         'build',
-        't',
+        '-t',
         'asia-southeast1-docker.pkg.dev/fullstack-394610/notifications/production',
         '-f',
         'apps/notifications/Dockerfile',
