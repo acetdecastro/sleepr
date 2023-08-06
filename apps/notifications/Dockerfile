@@ -30,4 +30,4 @@ RUN yarn install --production=true
 
 COPY --from=development /usr/src/app/dist ./dist
 
-CMD ["node", "dist/notifications/main"]
+CMD ["node", "dist/apps/notifications/main"]
