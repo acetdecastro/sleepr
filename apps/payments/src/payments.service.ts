@@ -3,7 +3,6 @@ import {
   Inject,
   Injectable,
   InternalServerErrorException,
-  Logger,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ClientProxy } from '@nestjs/microservices';
@@ -18,8 +17,6 @@ export class PaymentsService {
       apiVersion: '2022-11-15',
     },
   );
-
-  private readonly logger = new Logger(PaymentsService.name);
 
   constructor(
     private readonly configService: ConfigService,
