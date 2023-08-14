@@ -1,4 +1,4 @@
-import { NOTIFICATIONS_SERVICE, NotificationType } from '@app/common';
+import { NOTIFICATIONS_SERVICE } from '@app/common';
 import {
   Inject,
   Injectable,
