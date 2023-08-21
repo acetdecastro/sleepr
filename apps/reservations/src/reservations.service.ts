@@ -12,6 +12,8 @@ import { EventType, PAYMENTS_SERVICE, UserDto } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { map } from 'rxjs';
 
+// test commit
+
 @Injectable()
 export class ReservationsService {
   constructor(
